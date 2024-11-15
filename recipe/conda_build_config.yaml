@@ -101,5 +101,5 @@ github_actions_labels:          # [linux]
 - cirun-openstack-gpu-2xlarge   # [linux]
 
 megabuild:
-- true      # [linux64]
-- false     # [not linux64]
+- true      # [linux]
+- false     # [osx]
