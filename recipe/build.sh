@@ -14,6 +14,20 @@ rm -rf pyproject.toml
 
 export USE_NUMA=0
 export USE_ITT=0
+if [[ "$target_platform" == "linux-ppc64le" ]]; then
+  # Disable treating warnings as errors
+  export USE_WERROR=0
+
+  # Fix 'relocation truncated' linker errors on PowerPC64le by:
+  # - Using a larger code model to allow code and data beyond 2GB.
+  # - Using -mlongcall to generate function calls that can reach any address.
+  export CFLAGS="$CFLAGS -mcmodel=medium -mlongcall"
+  export CXXFLAGS="$CXXFLAGS -mcmodel=medium -mlongcall"
+  export LDFLAGS="$LDFLAGS -mcmodel=medium"
+
+  export CFLAGS="$CFLAGS -Wno-error=ignored-attributes"
+  export CXXFLAGS="$CXXFLAGS -Wno-error=ignored-attributes"
+fi
 export CFLAGS="$(echo $CFLAGS | sed 's/-fvisibility-inlines-hidden//g')"
 export CXXFLAGS="$(echo $CXXFLAGS | sed 's/-fvisibility-inlines-hidden//g')"
 export LDFLAGS="$(echo $LDFLAGS | sed 's/-Wl,--as-needed//g')"
