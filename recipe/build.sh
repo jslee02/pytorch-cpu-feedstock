@@ -19,16 +19,15 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   export USE_WERROR=0
 
   # Fix 'relocation truncated' linker errors on ppc64le by:
-  # - Using a larger code model (-mcmodel=medium) to allow code and data beyond 2GB.
   # - Using -mlongcall to generate function calls that can reach any address.
   # - Using -mfull-toc to handle larger TOC sizes and prevent TOC overflows.
   # - Adding -Wl,--relax to enable linker relaxation, allowing larger code sizes.
-  export CXXFLAGS="$CXXFLAGS -mcmodel=medium -mlongcall -mfull-toc"
-  export CFLAGS="$CFLAGS -mcmodel=medium -mlongcall -mfull-toc"
-  export LDFLAGS="$LDFLAGS -mcmodel=medium -mlongcall -Wl,--relax -mfull-toc"
+  export CXXFLAGS="$CXXFLAGS -mlongcall -mfull-toc"
+  export CFLAGS="$CFLAGS -mlongcall -mfull-toc"
+  export LDFLAGS="$LDFLAGS -mlongcall -Wl,--relax"
 
-  export CFLAGS="$CFLAGS -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-but-set-parameter -Wno-ignored-attributes -Wno-error=ignored-attributes"
-  export CXXFLAGS="$CXXFLAGS -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-but-set-parameter -Wno-ignored-attributes -Wno-error=ignored-attributes"
+  export CFLAGS="$CFLAGS -Wno-unused-variable -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-but-set-parameter -Wno-ignored-attributes -Wno-error=ignored-attributes"
+  export CXXFLAGS="$CXXFLAGS -Wno-unused-variable -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-but-set-parameter -Wno-ignored-attributes -Wno-error=ignored-attributes"
 fi
 export CFLAGS="$(echo $CFLAGS | sed 's/-fvisibility-inlines-hidden//g')"
 export CXXFLAGS="$(echo $CXXFLAGS | sed 's/-fvisibility-inlines-hidden//g')"
