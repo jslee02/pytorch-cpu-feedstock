@@ -18,12 +18,13 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   # Disable treating warnings as errors
   export USE_WERROR=0
 
-  # Fix 'relocation truncated' linker errors on ppc64le by:
-  # - Using -mlongcall to generate function calls that can reach any address.
-  # - Using -mfull-toc to handle larger TOC sizes and prevent TOC overflows.
-  # - Adding -Wl,--relax to enable linker relaxation, allowing larger code sizes.
-  export CXXFLAGS="$CXXFLAGS -mlongcall -mfull-toc"
-  export CFLAGS="$CFLAGS -mlongcall -mfull-toc"
+  # Fix 'got/toc optimization is not supported' error on ppc64le by:
+  # - Disabling TOC optimizations with -mno-toc-optimize
+  # - Using -mlongcall to generate function calls that can reach any address
+  # - Using -mfull-toc to handle larger TOC sizes
+  # - Adding -Wl,--relax to enable linker relaxation
+  export CXXFLAGS="$CXXFLAGS -mlongcall -mfull-toc -mno-toc-optimize"
+  export CFLAGS="$CFLAGS -mlongcall -mfull-toc -mno-toc-optimize"
   export LDFLAGS="$LDFLAGS -mlongcall -Wl,--relax"
 
   export CFLAGS="$CFLAGS -Wno-stringop-overread -Wno-unused-variable -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-but-set-parameter -Wno-ignored-attributes -Wno-error=ignored-attributes"
