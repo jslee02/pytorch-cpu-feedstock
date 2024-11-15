@@ -26,8 +26,8 @@ if [[ "$target_platform" == "linux-ppc64le" ]]; then
   export CFLAGS="$CFLAGS -mlongcall -mfull-toc"
   export LDFLAGS="$LDFLAGS -mlongcall -Wl,--relax"
 
-  export CFLAGS="$CFLAGS -Wno-unused-variable -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-but-set-parameter -Wno-ignored-attributes -Wno-error=ignored-attributes"
-  export CXXFLAGS="$CXXFLAGS -Wno-unused-variable -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-but-set-parameter -Wno-ignored-attributes -Wno-error=ignored-attributes"
+  export CFLAGS="$CFLAGS -Wno-stringop-overread -Wno-unused-variable -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-but-set-parameter -Wno-ignored-attributes -Wno-error=ignored-attributes"
+  export CXXFLAGS="$CXXFLAGS -Wno-stringop-overread -Wno-unused-variable -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-but-set-parameter -Wno-ignored-attributes -Wno-error=ignored-attributes"
 fi
 export CFLAGS="$(echo $CFLAGS | sed 's/-fvisibility-inlines-hidden//g')"
 export CXXFLAGS="$(echo $CXXFLAGS | sed 's/-fvisibility-inlines-hidden//g')"
